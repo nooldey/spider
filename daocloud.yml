@@ -1,0 +1,11 @@
+image: daocloud/ci-node:0.12
+
+before_script:
+    - npm config set user 0
+    - npm config set unsafe-perm true
+    - npm install
+    - git config --global user.name "ssn"
+    - git config --global user.email "qiankatg@163.com"
+
+script:
+    - node geturlasync.js
