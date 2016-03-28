@@ -78,7 +78,7 @@ var getPost = function(data){
         //匹配域名
         if ($(elem).attr("src").match(/\w+\.?\w+\.com/)=="www.uiv5.com") {
           _a.push($(elem).attr("src"));
-          _as.push($(elem).parent("a").attr("href"));
+          _as.push($(elem).parentNote("a").attr("href"));
         }
       })
       //利用对象存储获取到的标题，内容，img src,a href
