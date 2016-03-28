@@ -25,10 +25,6 @@ for (var i = 0; i < 3; i++) {
 
 //控制并发爬取每一页的文章
 var fetchUrl = function(url,callback){
-  //设置header信息，post浏览器代理信息
-    superagent.post('/api/pet').set('Content-Type','application/json')
-    .send({name:"ssn",pet:"tobi"}).set('Accept', 'application/json').set('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36').end(null);
-
   //发起一个get请求，请求完毕的结果存储在res.text当中
   superagent.get(url).end(function(err,res){
     if (err) {
@@ -73,19 +69,20 @@ var getPost = function(data){
       var $ = cheerio.load(res.txt,{decodeEntities:false})
       console.log("抓取url：" + url);
       var _a=[]; //临时存储每篇文章中的img src
-      var _as=[]; //临时存储每页文章中的a href
+      // var _as=[]; //临时存储每页文章中的a href
       $(".single-post .entry-content").find("img.alignnone").each(function(index,elem){
         //匹配域名
         if ($(elem).attr("src").match(/\w+\.?\w+\.com/)=="www.uiv5.com") {
           _a.push($(elem).attr("src"));
-          _as.push($(elem).parentNote("a").attr("href"));
+          // _as.push($(elem).parent("a").attr("href"));
         }
       })
       //利用对象存储获取到的标题，内容，img src,a href
       var _o = {
         "title": $(".single-post > .entry-title").text(),
         "content": $(".single-post .entry-content").html(),
-        "imgs": {"imgsrc":_a,"ahref":_as}
+        "imgs": {"imgsrc":_a}
+        // "imgs": {"imgsrc":_a,"ahref":_as}
       }
       callback(null,_o)
     })
@@ -107,7 +104,7 @@ var createPost = function(data){
     */
     var _c = nowelemcontent;
     //循环替换 a imgsrc
-    nowelem.imgsrc.forEach(function(n,e){
+    nowelem.imgsrc.forEach(function(n){ //function(n,e){}
       //获取后缀
       var suffx = n.match(/(\/.\w+)|(\.\w+$)/gi).pop()
       //获取文件名
@@ -116,10 +113,11 @@ var createPost = function(data){
       //命名
       var overname = "./mm/imgs/"+_d.getFullYear()+"-"+(_d.getMonth()+1)+"-"+_d.getDate()+"-"+filename+suffx;
       //拉取远程图片到本地
-      request(nowelem.ahref[e]).pipe(fs.createWriteStream(overname))
+      request(nowelem.imgsrc[e]).pipe(fs.createWriteStream(overname))
+      // request(nowelem.ahref[e]).pipe(fs.createWriteStream(overname))
       //替换src
       _c = _c.replace(n,overname)
-      _c = _c.replace(nowelem.ahref[e],overname);
+      // _c = _c.replace(nowelem.ahref[e],overname);
     });
     return c;
   }
