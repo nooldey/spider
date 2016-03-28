@@ -25,6 +25,10 @@ for (var i = 0; i < 3; i++) {
 
 //控制并发爬取每一页的文章
 var fetchUrl = function(url,callback){
+  //设置header信息，post浏览器代理信息
+    superagent.post('/api/pet').set('Content-Type','application/json')
+    .send({name:"ssn",pet:"tobi"}).set('Accept', 'application/json').set('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36').end(null);
+
   //发起一个get请求，请求完毕的结果存储在res.text当中
   superagent.get(url).end(function(err,res){
     if (err) {
