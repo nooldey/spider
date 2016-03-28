@@ -52,10 +52,10 @@ async.mapLimit(getlinks,5,function(url,callback){
   fetchUrl(url,callback);
 },function(err,result){
   //getlinks 全部爬取后的结果组合在一起成为一个数组存储在result中
-  console.log('获取文章链接完毕，存储在“postlinks”，开始抓取文章标题和内容')
-  console.log(result)
-  console.log(postlinks)
-  getPost(postlinks)
+  console.log('获取文章链接完毕，存储在“postlinks”，开始抓取文章标题和内容');
+  console.log(result);
+  console.log(postlinks);
+  getPost(postlinks);
 });
 
 
@@ -70,19 +70,18 @@ var getPost = function(data){
       console.log("抓取url：" + url);
       var _a=[]; //临时存储每篇文章中的img src
       // var _as=[]; //临时存储每页文章中的a href
-      $(".single-post .entry-content").find("img.alignnone").each(function(index,elem){
+      $(".single-post .entry-content").find("a:has(.alignnone)").each(function(index,elem){
         //匹配域名
-        if ($(elem).attr("src").match(/\w+\.?\w+\.com/)=="www.uiv5.com") {
-          _a.push($(elem).attr("src"));
-          // _as.push($(elem).parent("a").attr("href"));
+        if ($(elem).find("img").attr("src").match(/\w+\.?\w+\.com/)=="www.uiv5.com") {
+          _a.push($(elem)find("img").attr("src"));
+          _as.push($(elem).attr("href"));
         }
       })
       //利用对象存储获取到的标题，内容，img src,a href
       var _o = {
         "title": $(".single-post > .entry-title").text(),
         "content": $(".single-post .entry-content").html(),
-        "imgs": {"imgsrc":_a}
-        // "imgs": {"imgsrc":_a,"ahref":_as}
+        "imgs": {"imgsrc":_a,"ahref":_as}
       }
       callback(null,_o)
     })
@@ -104,7 +103,7 @@ var createPost = function(data){
     */
     var _c = nowelemcontent;
     //循环替换 a imgsrc
-    nowelem.imgsrc.forEach(function(n){ //function(n,e){}
+    nowelem.imgsrc.forEach(function(n,e){ //function(n,e){}
       //获取后缀
       var suffx = n.match(/(\/.\w+)|(\.\w+$)/gi).pop()
       //获取文件名
@@ -113,11 +112,10 @@ var createPost = function(data){
       //命名
       var overname = "./mm/imgs/"+_d.getFullYear()+"-"+(_d.getMonth()+1)+"-"+_d.getDate()+"-"+filename+suffx;
       //拉取远程图片到本地
-      request(nowelem.imgsrc[e]).pipe(fs.createWriteStream(overname))
-      // request(nowelem.ahref[e]).pipe(fs.createWriteStream(overname))
+      request(nowelem.ahref[e]).pipe(fs.createWriteStream(overname))
       //替换src
       _c = _c.replace(n,overname)
-      // _c = _c.replace(nowelem.ahref[e],overname);
+      _c = _c.replace(nowelem.ahref[e],overname);
     });
     return c;
   }

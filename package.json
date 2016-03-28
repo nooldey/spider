@@ -2,7 +2,7 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "my blog graber",
-  "main": "geturlasync.js",
+  "main": "geturlagent.js",
   "dependencies": {
     "async": "^2.0.0-rc.2",
     "cheerio": "^0.20.0",
@@ -10,7 +10,8 @@
     "fs": "^0.0.2",
     "request": "^2.69.0",
     "superagent": "^1.8.3",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "eventproxy": "^0.3.4"
   },
   "devDependencies": {},
   "scripts": {
