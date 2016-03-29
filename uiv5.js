@@ -14,8 +14,8 @@ var request = require('request');
 
 // 初始化
 var sourceUrl = 'http://uiv5.com/';
-var postUrls = sourceUrl + '/?paged=1';
-var postUrls2 = sourceUrl + '/?paged=2';
+var postUrls = sourceUrl + '/?paged=2';
+
 // 核心代码
 superagent.get(postUrls)
     .end(function(err,res){
@@ -45,7 +45,7 @@ superagent.get(postUrls)
                     "title": $('.single-post h2.entry-title').text().trim(),
                     "href": topicUrl,
                     "tags": $('.single-post .entry-info .tags').text().trim(),
-                    "Data": $('.single-post .entry-info :not(.tags)').text().trim(),
+                    "Data": $('.single-post .entry-info').text().trim(),
                     "content": $('.single-post .entry-content').html()
                 };
                 return post;
@@ -96,10 +96,10 @@ superagent.get(postUrls)
                     content = getImg(srcs,content);
                 }
 
-                // //生成markdown内容
-                // markdown = "title: " + title + "\ndata: " + Data + "\ntags:\n" + tags + "\n\n---\n\n" + content + "\n";
-                // //创建文件
-                // fs.writeFile("./mm/" + title + ".md",markdown);
+                //生成markdown内容
+                markdown = "title: " + title + "\ndata: " + Data + "\ntags:\n" + tags + "\n\n---\n\n" + content + "\n";
+                //创建文件
+                fs.writeFile("./mm/" + title + ".md",markdown);
             });
         }
 
