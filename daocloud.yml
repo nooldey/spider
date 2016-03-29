@@ -8,4 +8,4 @@ before_script:
     - git config --global user.email "qiankatg@163.com"
 
 script:
-    - node geturlasync.js
+    - node app.js
