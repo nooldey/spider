@@ -45,7 +45,7 @@ superagent.get(postUrls)
                     "title": $('.single-post h2.entry-title').text().trim(),
                     "href": topicUrl,
                     "tags": $('.single-post .entry-info .tags').text().trim(),
-                    "Data": $('.single-post .entry-info').text().trim(),
+                    "Date": $('.single-post .entry-info').text().trim(),
                     "content": $('.single-post .entry-content').html()
                 };
                 return post;
@@ -79,7 +79,7 @@ superagent.get(postUrls)
             topics.forEach(function(post){
                 var title = post.title;
                 var tags = post.tags;
-                var Data = post.Data;
+                var Date = post.Date;
                 var content = post.content.replace(/^\s+/,"");
                 var markdown = '';
 
@@ -97,7 +97,7 @@ superagent.get(postUrls)
                 }
 
                 //生成markdown内容
-                markdown = "title: " + title + "\ndata: " + Data + "\ntags:\n" + tags + "\n\n---\n\n" + content + "\n";
+                markdown = "title: " + title + "\ndate: " + Date + "\ntags:\n" + tags + "\n\n---\n\n" + content + "\n";
                 //创建文件
                 fs.writeFile("./mm/" + title + ".md",markdown);
             });
