@@ -2,8 +2,6 @@
 * 用 superagent + eventproxy 控制并发
 *
 */
-
-
 // 引入库
 var eventproxy = require('eventproxy');
 var superagent = require('superagent');

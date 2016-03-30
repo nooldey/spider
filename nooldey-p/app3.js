@@ -30,7 +30,7 @@ var createPost = function(posts){
             //远程拉取图片到本地
             request(src).pipe(fs.createWriteStream("./mm/imgs/" + newName));
             //替换content中的图片地址
-            var conImg = "./imgs/" + newName;
+            var conImg = "/imgs/" + newName;
             _c = _c.replace(src,conImg);
             _c = _c.replace(src,conImg);
         });
