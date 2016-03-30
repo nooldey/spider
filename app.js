@@ -9,8 +9,8 @@ app.get('/',function(req,res){
     res.send('Hello World');
 });
 
-/******本地测试基础设置（必须）******/
-//设置本地监听端口
-app.listen(3300,function(){
-    console.log('app is listening at port 3300');
-});
+// /******本地测试基础设置（必须）******/
+// //设置本地监听端口
+// app.listen(3300,function(){
+//     console.log('app is listening at port 3300');
+// });
