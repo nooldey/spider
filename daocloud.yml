@@ -4,8 +4,8 @@ before_script:
     - npm config set user 0
     - npm config set unsafe-perm true
     - npm install
-    - git config --global user.name "ssn"
-    - git config --global user.email "qiankatg@163.com"
+    - git config --global user.name "nooldey"
+    - git config --global user.email "nooldey@gmail.com"
 
 script:
     - node app.js
